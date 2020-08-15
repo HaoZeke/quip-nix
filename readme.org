@@ -1,0 +1,4 @@
+* About
+Some derivations to use QUIP on my cluster.
+** License
+[[http://www.wtfpl.net/about/][WTFPL]]
