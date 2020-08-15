@@ -1,0 +1,26 @@
+diff --git a/src/fox b/src/fox
+--- a/src/fox
++++ b/src/fox
+@@ -1 +1 @@
+-Subproject commit 50003c9f4503385e4f4664ec3ef9539994e949b5
++Subproject commit 50003c9f4503385e4f4664ec3ef9539994e949b5-dirty
+diff --git a/src/libAtoms/xyz.c b/src/libAtoms/xyz.c
+index 0c6434278..d7752beec 100644
+--- a/src/libAtoms/xyz.c
++++ b/src/libAtoms/xyz.c
+@@ -410,7 +410,6 @@ char* get_line(char *linebuffer, int string, int string_length, char *orig_strin
+   *line_offset = 0;
+   if (string) {
+     if (*stringp == '\0' || (string_length != 0 && (stringp-orig_stringp >= string_length))) {
+-      RAISE_ERROR_WITH_KIND(ERROR_IO_EOF, info);
+     }
+     *prev_stringp = stringp;
+     while (*stringp != '\n' && *stringp != '\0' && (string_length == 0 || stringp-orig_stringp < string_length)) stringp++;
+@@ -428,7 +427,6 @@ char* get_line(char *linebuffer, int string, int string_length, char *orig_strin
+     return stringp;
+   } else {
+     if (!fgets(linebuffer,LINESIZE,in)) {
+-      RAISE_ERROR_WITH_KIND(ERROR_IO_EOF, info);
+     }
+     linebuffer[strlen(linebuffer)-1] = '\0';
+     if (strip_prefix) {
