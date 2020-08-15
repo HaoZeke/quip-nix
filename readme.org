@@ -1,4 +1,57 @@
 * About
-Some derivations to use QUIP on my cluster.
-** License
+Some derivations to use QUIP on my cluster. Note that because of the psuedo-proprietary nature of GAP and some other aspects of this workflow, the sources cannot be provided here.
+
+** Sources
+- GAP (Gaussian Approximation Potentials) from [[http://www.libatoms.org/gap/gap_download.html][here]]
+    - My own setup used a branch which included support for the TurboSOAP descriptor
+- TurboSOAP sources
+  - Some explanation of this might be [[https://turbogap.fi/wiki/index.php/Quick_start][found here]]
+- [[https://github.com/libAtoms/QUIP][QUIP]] itself
+- Fortran XML parser ([[https://github.com/libAtoms/fox][FoX]])
+  - This comes with QUIP, as a submodule
+
+I can and will however, provide the directory listing:
+#+BEGIN_SRC bash :results raw
+tree QUIP -d -L 2
+#+END_SRC
+
+#+begin_src bash
+QUIP
+├── arch
+├── bin
+│   └── __pycache__
+├── build
+│   └── linux_x86_64_gfortran
+├── doc
+│   ├── _static
+│   ├── _templates
+│   └── Tutorials
+├── quippy
+│   ├── __pycache__
+│   └── quippy
+├── share
+│   ├── Parameters
+│   └── Structures
+├── src
+│   ├── f90wrap
+│   ├── FilePot_drivers
+│   ├── fox
+│   ├── GAP
+│   ├── libAtoms
+│   ├── Potentials
+│   ├── Programs
+│   ├── Structure_processors
+│   ├── turbogap
+│   └── Utils
+├── tests
+│   ├── do_not_run
+│   └── rules
+└── travis
+
+30 directories
+#+end_src bash
+
+- Note the additions to the ~src~ folder
+- Also, the TurboSOAP sources are ABSOLUTE PATHS for some reason
+* License
 [[http://www.wtfpl.net/about/][WTFPL]]
