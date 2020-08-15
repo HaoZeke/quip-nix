@@ -203,3 +203,5 @@ dmypy.json
 *.app
 
 
+# Additional stuff
+QUIP
