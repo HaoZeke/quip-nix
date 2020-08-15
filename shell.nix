@@ -11,7 +11,8 @@ let
   # Shell Hook
   hook = ''
     export QUIP_ARCH=linux_x86_64_gfortran
-    export QUIP_INSTALLDIR=linux_x86_64_gfortran
+    export QUIP_INSTALLDIR=$HOME/.local/bin
+    export QUIP_STRUCTS_DIR=$HOME/.local/quip_structs
   '';
 in pkgs.mkShell {
   buildInputs = with pkgs; [
