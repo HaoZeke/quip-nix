@@ -31,7 +31,7 @@ in pkgs.mkShell {
     gfortran
     liblapack
     blas
-    pythonEnv
+    # pythonEnv
   ];
   shellHook = hook;
 }
