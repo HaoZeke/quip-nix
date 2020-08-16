@@ -206,3 +206,7 @@ dmypy.json
 # Additional stuff
 QUIP
 out/
+*.xyz
+*.idx
+*.traj
+*.xml*
