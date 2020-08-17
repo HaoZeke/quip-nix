@@ -1,35 +1,13 @@
 # Define
 let
-  # https://discourse.nixos.org/t/how-to-create-a-nix-shell-environment-with-different-python-version-as-default/3236/3
-  overlay = (self: super: rec {
-    python38 = super.python38.override {
-      packageOverrides = self: super: {
-        pytest = super.pytest.overrideAttrs (old: {
-          doCheck = false;
-          doInstallCheck = false;
-        });
-        numpy = super.numpy.overrideAttrs (old: {
-          doCheck = false;
-          doInstallCheck = false;
-        });
-        scipy = super.scipy.overrideAttrs (old: {
-          doCheck = false;
-          doInstallCheck = false;
-        });
-      };
-    };
-    python38Packages = python38.pkgs;
-  });
-
-  myPythonPackages = ps: with ps; [ numpy ase ipykernel ipython ];
-
   sources = import ./nix/sources.nix;
-  pkgs = import sources.nixpkgs { overlays = [ overlay ]; };
+  pkgs = import sources.nixpkgs { };
   inherit (pkgs.lib) optional optionals;
   # Import
   buildpkgs = import ./nix { };
   # Shell Hook
   # https://churchman.nl/2019/01/22/using-nix-to-create-python-virtual-environments/
+  # https://discourse.nixos.org/t/how-to-create-a-nix-shell-environment-with-different-python-version-as-default/3236/3
   hook = ''
     # QUIP Stuff
      export QUIP_ARCH=linux_x86_64_gfortran
@@ -57,7 +35,38 @@ in pkgs.mkShell {
     gcc9
     gfortran
     openblas
-    (python38.withPackages myPythonPackages)
+    # https://github.com/sveitser/i-am-emotion/blob/294971493a8822940a153ba1bf211bad3ae396e6/gpt2/shell.nix
+    (python3.buildEnv.override {
+      extraLibs = with python3Packages; [
+        (fire.overridePythonAttrs (old: {
+          doCheck = false;
+          doInstallCheck = false;
+        }))
+        (pytest.overridePythonAttrs (old: {
+          doCheck = false;
+          doInstallCheck = false;
+        }))
+        (numpy.overridePythonAttrs (old: {
+          doCheck = false;
+          doInstallCheck = false;
+        }))
+        (scipy.overridePythonAttrs (old: {
+          doCheck = false;
+          doInstallCheck = false;
+        }))
+        (tensorflowWithCuda.override {
+          cudnn = cudnn_cudatoolkit_10;
+          cudatoolkit = cudatoolkit_10;
+        })
+        regex
+        ipython
+        python-language-server
+        flask
+        black
+        unidecode
+      ];
+      ignoreCollisions = true;
+    })
   ];
   shellHook = hook;
 }
