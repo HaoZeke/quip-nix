@@ -48,6 +48,16 @@ let
         doCheck = false;
         doInstallCheck = false;
       });
+      f90wrap = self.buildPythonPackage rec {
+        pname = "f90wrap";
+        version = "0.2.3";
+        src = self.fetchPypi {
+          inherit pname version;
+          sha256 = "0qnf3qg0mx1whbysq072y0wpj0s3kkld96wzfmnqdi72mk8f3li1";
+          extension = "zip";
+        };
+        propagatedBuildInputs = with self; [ setuptools setuptools-git wheel ];
+      };
     };
   };
 in pkgs.mkShell {
@@ -73,6 +83,7 @@ in pkgs.mkShell {
     python.pkgs.ipykernel
     python.pkgs.scipy
     python.pkgs.numpy
+    python.pkgs.f90wrap
     # https://github.com/sveitser/i-am-emotion/blob/294971493a8822940a153ba1bf211bad3ae396e6/gpt2/shell.nix
   ];
   shellHook = hook;
