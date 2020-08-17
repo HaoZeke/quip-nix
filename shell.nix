@@ -4,8 +4,14 @@ let
   overlay = (self: super: rec {
     python38 = super.python38.override {
       packageOverrides = self: super: {
-        pytest = super.pytest.overrideAttrs (old: { doCheck = false; });
-        scipy = super.scipy.overrideAttrs (old: { doCheck = false; });
+        pytest = super.pytest.overrideAttrs (old: {
+          doCheck = false;
+          doInstallCheck = false;
+        });
+        scipy = super.scipy.overrideAttrs (old: {
+          doCheck = false;
+          doInstallCheck = false;
+        });
       };
     };
     python38Packages = python38.pkgs;
