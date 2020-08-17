@@ -8,6 +8,10 @@ let
           doCheck = false;
           doInstallCheck = false;
         });
+        numpy = super.numpy.overrideAttrs (old: {
+          doCheck = false;
+          doInstallCheck = false;
+        });
         scipy = super.scipy.overrideAttrs (old: {
           doCheck = false;
           doInstallCheck = false;
