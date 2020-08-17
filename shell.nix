@@ -1,13 +1,22 @@
 # Define
 let
+  overlay = (self: super: rec {
+    python38 = super.python38.override {
+      packageOverrides = self: super: {
+        pytest = super.pytest.overrideAttrs (old: { doCheck = true; });
+        scipy = super.scipy.overrideAttrs (old: { doCheck = true; });
+      };
+    };
+    python38Packages = python38.pkgs;
+  });
+
+  myPythonPackages = ps: with ps; [ numpy ase ipykernel ipython ];
+
   sources = import ./nix/sources.nix;
-  pkgs = import sources.nixpkgs { };
+  pkgs = import sources.nixpkgs { overlays = [ overlay ]; };
   inherit (pkgs.lib) optional optionals;
   # Import
   buildpkgs = import ./nix { };
-  # Python
-  pythonEnv =
-    pkgs.python38.withPackages (ps: with ps; [ numpy ase ipykernel ipython ]);
   # Shell Hook
   hook = ''
     export QUIP_ARCH=linux_x86_64_gfortran
@@ -30,7 +39,7 @@ in pkgs.mkShell {
     gcc9
     gfortran
     openblas
-    # pythonEnv
+    (python38.withPackages myPythonPackages)
   ];
   shellHook = hook;
 }
