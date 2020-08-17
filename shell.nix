@@ -32,7 +32,6 @@ in pkgs.mkShell {
     liblapack
     blas
     # pythonEnv
-    conda
   ];
   shellHook = hook;
 }
