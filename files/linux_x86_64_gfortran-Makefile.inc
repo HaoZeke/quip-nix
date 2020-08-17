@@ -15,7 +15,7 @@
 # DEBUG=-O0 -g -DDUMP_CORE_ON_ABORT -DDEBUG -fbounds-check
 # DEBUG=
 # CDEBUG=
-MATH_LINKOPTS=-lopenblas
+MATH_LINKOPTS=-L/users/home/rog32/.nix/store/g17gpjm8m9irvkfcx1xxii9d5q7g90k2-openblas-0.3.10/lib -lopenblas
 EXTRA_LINKOPTS=
 USE_MAKEDEP=1
 MAKEDEP=makedep.py
