@@ -72,7 +72,7 @@ let
     };
   };
   myPy = python.withPackages
-    (p: with p; [ ase ipython ipykernel scipy numpy f90wrap ]);
+    (p: with p; [ ase ipython ipykernel scipy numpy f90wrap pip ]);
 in pkgs.mkShell {
   buildInputs = with pkgs; [
     # Required for the shell
