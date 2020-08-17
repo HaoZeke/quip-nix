@@ -67,6 +67,7 @@ in pkgs.mkShell {
     openblas
 
     # Python
+    python
     python.pkgs.ase
     python.pkgs.ipython
     python.pkgs.ipykernel
