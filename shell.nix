@@ -54,10 +54,6 @@ in pkgs.mkShell {
           doCheck = false;
           doInstallCheck = false;
         }))
-        (tensorflowWithCuda.override {
-          cudnn = cudnn_cudatoolkit_10;
-          cudatoolkit = cudatoolkit_10;
-        })
         regex
         ipython
         python-language-server
