@@ -71,6 +71,8 @@ let
       };
     };
   };
+  myPy = python.withPackages
+    (p: with p; [ ase ipython ipykernel scipy numpy f90wrap ]);
 in pkgs.mkShell {
   buildInputs = with pkgs; [
     # Required for the shell
@@ -87,14 +89,7 @@ in pkgs.mkShell {
     gfortran
     openblas
 
-    # Python
-    python
-    python.pkgs.ase
-    python.pkgs.ipython
-    python.pkgs.ipykernel
-    python.pkgs.scipy
-    python.pkgs.numpy
-    python.pkgs.f90wrap
+    myPy
     # https://github.com/sveitser/i-am-emotion/blob/294971493a8822940a153ba1bf211bad3ae396e6/gpt2/shell.nix
   ];
   shellHook = hook;
