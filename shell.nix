@@ -38,27 +38,27 @@ in pkgs.mkShell {
     # https://github.com/sveitser/i-am-emotion/blob/294971493a8822940a153ba1bf211bad3ae396e6/gpt2/shell.nix
     (python3.buildEnv.override {
       extraLibs = with python3Packages; [
-        (pytest.overridePythonAttrs (old: {
+        (super.pytest.overridePythonAttrs (old: {
           doCheck = false;
           doInstallCheck = false;
         }))
-        (numpy.overridePythonAttrs (old: {
+        (super.numpy.overridePythonAttrs (old: {
           doCheck = false;
           doInstallCheck = false;
         }))
-        (scipy.overridePythonAttrs (old: {
+        (super.scipy.overridePythonAttrs (old: {
           doCheck = false;
           doInstallCheck = false;
         }))
-        (ipykernel.overridePythonAttrs (old: {
+        (super.ipykernel.overridePythonAttrs (old: {
           doCheck = false;
           doInstallCheck = false;
         }))
-        (ase.overridePythonAttrs (old: {
+        (super.ase.overridePythonAttrs (old: {
           doCheck = false;
           doInstallCheck = false;
         }))
-        (ipython.overridePythonAttrs (old: {
+        (super.ipython.overridePythonAttrs (old: {
           doCheck = false;
           doInstallCheck = false;
         }))
