@@ -54,7 +54,8 @@ let
         src = pkgs.fetchFromGitHub {
           owner = "jameskermode";
           repo = "f90wrap";
-          sha256 = "1zrchjzy7hcy3azw3fdqybb37d2zbf0b07zjilvssnjcjf9flxsm";
+          rev = "master";
+          sha256 = "0d06nal4xzg8vv6sjdbmg2n88a8h8df5ajam72445mhzk08yin23";
         };
         buildInputs = with pkgs; [ gfortran stdenv ];
         propagatedBuildInputs = with self; [
