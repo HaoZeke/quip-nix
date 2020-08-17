@@ -15,7 +15,7 @@
 # DEBUG=-O0 -g -DDUMP_CORE_ON_ABORT -DDEBUG -fbounds-check
 # DEBUG=
 # CDEBUG=
-MATH_LINKOPTS=-llapack -lblas
+MATH_LINKOPTS=-lopenblas
 EXTRA_LINKOPTS=
 USE_MAKEDEP=1
 MAKEDEP=makedep.py
