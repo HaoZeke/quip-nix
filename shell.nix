@@ -51,10 +51,10 @@ let
       f90wrap = self.buildPythonPackage rec {
         pname = "f90wrap";
         version = "0.2.3";
-        src = self.fetchPypi {
-          inherit pname version;
+        src = self.fetchFromGithub {
+          owner = "jameskermode";
+          repo = "f90wrap";
           sha256 = "1zrchjzy7hcy3azw3fdqybb37d2zbf0b07zjilvssnjcjf9flxsm";
-          extension = "tar.gz";
         };
         buildInputs = with pkgs; [ gfortran stdenv ];
         propagatedBuildInputs = with self; [
