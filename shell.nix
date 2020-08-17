@@ -51,7 +51,7 @@ let
       f90wrap = self.buildPythonPackage rec {
         pname = "f90wrap";
         version = "0.2.3";
-        src = self.fetchFromGithub {
+        src = pkgs.fetchFromGithub {
           owner = "jameskermode";
           repo = "f90wrap";
           sha256 = "1zrchjzy7hcy3azw3fdqybb37d2zbf0b07zjilvssnjcjf9flxsm";
