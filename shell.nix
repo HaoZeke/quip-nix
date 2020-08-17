@@ -1,3 +1,4 @@
+{ pythonVersion ? "38" }:
 # Define
 let
   sources = import ./nix/sources.nix;
@@ -20,6 +21,35 @@ let
      unset SOURCE_DATE_EPOCH
   '';
   # Apparently pip needs 1980 or above
+  # https://github.com/ento/elm-doc/blob/master/shell.nix
+  python = pkgs."python${pythonVersion}".override {
+    packageOverrides = self: super: {
+      pytest = super.pytest.overridePythonAttrs (old: rec {
+        doCheck = false;
+        doInstallCheck = false;
+      });
+      numpy = super.numpy.overridePythonAttrs (old: rec {
+        doCheck = false;
+        doInstallCheck = false;
+      });
+      scipy = super.scipy.overridePythonAttrs (old: rec {
+        doCheck = false;
+        doInstallCheck = false;
+      });
+      ipython = super.ipython.overridePythonAttrs (old: rec {
+        doCheck = false;
+        doInstallCheck = false;
+      });
+      ipykernel = super.ipykernel.overridePythonAttrs (old: rec {
+        doCheck = false;
+        doInstallCheck = false;
+      });
+      ase = super.ase.overridePythonAttrs (old: rec {
+        doCheck = false;
+        doInstallCheck = false;
+      });
+    };
+  };
 in pkgs.mkShell {
   buildInputs = with pkgs; [
     # Required for the shell
@@ -35,36 +65,14 @@ in pkgs.mkShell {
     gcc9
     gfortran
     openblas
+
+    # Python
+    python.pkgs.ase
+    python.pkgs.ipython
+    python.pkgs.ipykernel
+    python.pkgs.scipy
+    python.pkgs.numpy
     # https://github.com/sveitser/i-am-emotion/blob/294971493a8822940a153ba1bf211bad3ae396e6/gpt2/shell.nix
-    (python3.buildEnv.override {
-      extraLibs = with python3Packages; [
-        (super.pytest.overridePythonAttrs (old: {
-          doCheck = false;
-          doInstallCheck = false;
-        }))
-        (super.numpy.overridePythonAttrs (old: {
-          doCheck = false;
-          doInstallCheck = false;
-        }))
-        (super.scipy.overridePythonAttrs (old: {
-          doCheck = false;
-          doInstallCheck = false;
-        }))
-        (super.ipykernel.overridePythonAttrs (old: {
-          doCheck = false;
-          doInstallCheck = false;
-        }))
-        (super.ase.overridePythonAttrs (old: {
-          doCheck = false;
-          doInstallCheck = false;
-        }))
-        (super.ipython.overridePythonAttrs (old: {
-          doCheck = false;
-          doInstallCheck = false;
-        }))
-      ];
-      ignoreCollisions = false;
-    })
   ];
   shellHook = hook;
 }
