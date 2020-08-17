@@ -29,8 +29,7 @@ in pkgs.mkShell {
     # Building thigns
     gcc9
     gfortran
-    liblapack
-    blas
+    openblas
     # pythonEnv
   ];
   shellHook = hook;
