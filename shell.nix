@@ -53,10 +53,21 @@ let
         version = "0.2.3";
         src = self.fetchPypi {
           inherit pname version;
-          sha256 = "0qnf3qg0mx1whbysq072y0wpj0s3kkld96wzfmnqdi72mk8f3li1";
-          extension = "zip";
+          sha256 = "1zrchjzy7hcy3azw3fdqybb37d2zbf0b07zjilvssnjcjf9flxsm";
+          extension = "tar.gz";
         };
-        propagatedBuildInputs = with self; [ setuptools setuptools-git wheel ];
+        buildInputs = with pkgs; [ gfortran stdenv ];
+        propagatedBuildInputs = with self; [
+          setuptools
+          setuptools-git
+          wheel
+          numpy
+        ];
+        preConfigure = ''
+          export F90=${pkgs.gfortran}/bin/gfortran
+        '';
+        doCheck = false;
+        doInstallCheck = false;
       };
     };
   };
