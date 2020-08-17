@@ -50,11 +50,20 @@ in pkgs.mkShell {
           doCheck = false;
           doInstallCheck = false;
         }))
-        ase
-        ipykernel
-        ipython
+        (ipykernel.overridePythonAttrs (old: {
+          doCheck = false;
+          doInstallCheck = false;
+        }))
+        (ase.overridePythonAttrs (old: {
+          doCheck = false;
+          doInstallCheck = false;
+        }))
+        (ipython.overridePythonAttrs (old: {
+          doCheck = false;
+          doInstallCheck = false;
+        }))
       ];
-      ignoreCollisions = true;
+      ignoreCollisions = false;
     })
   ];
   shellHook = hook;
