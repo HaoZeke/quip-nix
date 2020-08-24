@@ -17,8 +17,10 @@ let
      export PATH=$PATH:$QUIP_INSTALLDIR
     # Python Stuff
      export PIP_PREFIX="$(pwd)/_build/pip_packages"
-     export PYTHONPATH="$(pwd)/_build/pip_packages/lib/python3.8/site-packages:$PYTHONPATH"
+     export PYTHONPATH="$(pwd)/_build/pip_packages/lib/python3.8/site-packages"
      unset SOURCE_DATE_EPOCH
+    # quippy Stuff
+     export QUIPPY_INSTALL_OPTS="--prefix $PYTHONPATH"
   '';
   # Apparently pip needs 1980 or above
   # https://github.com/ento/elm-doc/blob/master/shell.nix
