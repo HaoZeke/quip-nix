@@ -6,6 +6,10 @@ let
   inherit (pkgs.lib) optional optionals;
   # Import
   buildpkgs = import ./nix { };
+  libuv = libuv.overrideAttrs (oldAttrs: {
+    doCheck = false;
+    doInstallCheck = false;
+  });
   # Shell Hook
   # https://churchman.nl/2019/01/22/using-nix-to-create-python-virtual-environments/
   # https://discourse.nixos.org/t/how-to-create-a-nix-shell-environment-with-different-python-version-as-default/3236/3
@@ -77,8 +81,8 @@ let
       };
     };
   };
-  myPy =
-    python.withPackages (p: with p; [ ase ipython ipykernel scipy numpy pip pandas ]);
+  myPy = python.withPackages
+    (p: with p; [ ase ipython ipykernel scipy numpy pip pandas f90wrap ]);
 in pkgs.mkShell {
   buildInputs = with pkgs; [
     # Required for the shell
