@@ -77,7 +77,7 @@ let
         };
       })
     ];
-    pkgs = pkgs;
+    pkgs = import sources.nixpkgs { };
     disable_checks = true;
   };
 in pkgs.mkShell {
