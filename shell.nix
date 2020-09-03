@@ -78,7 +78,7 @@ let
     };
   };
   myPy =
-    python.withPackages (p: with p; [ ase ipython ipykernel scipy numpy pip ]);
+    python.withPackages (p: with p; [ ase ipython ipykernel scipy numpy pip pandas ]);
 in pkgs.mkShell {
   buildInputs = with pkgs; [
     # Required for the shell
