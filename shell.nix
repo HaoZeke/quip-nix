@@ -21,6 +21,9 @@ let
      unset SOURCE_DATE_EPOCH
     # quippy Stuff
      export QUIPPY_INSTALL_OPTS="--prefix $PIP_PREFIX"
+    # Fixes for locale
+     export LOCALE_ARCHIVE="${pkgs.glibcLocales}/lib/locale/locale-archive";
+     export LC_ALL="en_US.UTF-8";
   '';
   # Apparently pip needs 1980 or above
   # https://github.com/ento/elm-doc/blob/master/shell.nix
@@ -74,8 +77,8 @@ let
       };
     };
   };
-  myPy = python.withPackages
-    (p: with p; [ ase ipython ipykernel scipy numpy f90wrap pip ]);
+  myPy =
+    python.withPackages (p: with p; [ ase ipython ipykernel scipy numpy pip ]);
 in pkgs.mkShell {
   buildInputs = with pkgs; [
     # Required for the shell
@@ -91,6 +94,7 @@ in pkgs.mkShell {
     gcc9
     gfortran
     openblas
+    glibcLocales
 
     myPy
     # https://github.com/sveitser/i-am-emotion/blob/294971493a8822940a153ba1bf211bad3ae396e6/gpt2/shell.nix
