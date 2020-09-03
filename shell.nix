@@ -22,7 +22,10 @@ let
     # quippy Stuff
      export QUIPPY_INSTALL_OPTS="--prefix $PIP_PREFIX"
   '';
-
+  libuv = libuv.overrideAttrs (oldAttrs: {
+    doCheck = false;
+    doInstallCheck = false;
+  });
   mach-nix = import (builtins.fetchGit {
     url = "https://github.com/DavHau/mach-nix/";
     ref = "2.2.2";
