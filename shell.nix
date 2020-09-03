@@ -78,7 +78,6 @@ let
       })
     ];
     pkgs = pkgs;
-    extra_pkgs = [ libuv ];
     disable_checks = true;
   };
 in pkgs.mkShell {
