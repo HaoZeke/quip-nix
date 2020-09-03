@@ -78,6 +78,10 @@ let
       })
     ];
     pkgs = pkgs;
+    libuv = pkgs.libuv.overrideAttrs (oldAttrs: {
+      doCheck = false;
+      doInstallCheck = false;
+    });
   };
 in pkgs.mkShell {
   buildInputs = with pkgs; [
