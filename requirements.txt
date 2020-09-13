@@ -1,0 +1,9 @@
+ase
+snakemake
+matplotlib
+scipy
+pandas
+numpy
+ipython
+ipykernel
+pip
