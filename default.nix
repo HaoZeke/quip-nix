@@ -54,7 +54,7 @@ let
   customPython = mach-nix.mkPython {
     pypi_deps_db_commit = "ed2da0e9bd68cf7050c44f874c54f924675a61b5";
     pypi_deps_db_sha256 =
-      "0gkklm0zb3pjxkkvvsda0ckvxb54mnqyxz31pwcjxjpx9jlqlbld";
+      "04fn0bsdmwgagj75libnb6ppjjkw4mb1zgvsw7ixg0d83l6vq9r5";
     requirements = builtins.readFile ./requirements.txt;
     extra_pkgs = [ f90wrap ];
     providers = { pytest = "nixpkgs"; };
