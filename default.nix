@@ -51,7 +51,7 @@ let
     url = "https://github.com/DavHau/mach-nix/";
     ref = "2.3.0";
   });
-  customPython = mach-nix.mkPython {
+  customPython = (mach-nix.mkPython {
     pypi_deps_db_commit = "ed2da0e9bd68cf7050c44f874c54f924675a61b5";
     pypi_deps_db_sha256 =
       "04fn0bsdmwgagj75libnb6ppjjkw4mb1zgvsw7ixg0d83l6vq9r5";
@@ -68,7 +68,7 @@ let
         disable_checks = true;
       })
     ];
-  };
+  }).override (oa: { ignoreCollisions = true; });
 in pkgs.buildEnv {
   name = "quip-env";
   paths = [ quip ];
