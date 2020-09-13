@@ -77,7 +77,7 @@ make install
 make install-quippy
 make libquip
 #+END_SRC
-** Nix Build
+** Nix Shell
 To get the integrated build just run:
 #+BEGIN_SRC bash
 nix-shell --run "zsh"
@@ -85,6 +85,14 @@ nix-shell --run "zsh"
 For permission errors use another terminal to run:
 #+BEGIN_SRC bash
 watch sudo chmod 777 /nix/store/2cg51vw7iws7ayawzwwr7rfv2ix5yws3-python3-3.8.5-env/lib/python3.8/site-packages -R
+#+END_SRC
+*The shell is required for* ~quippy~.
+** Nix Build
+After setting up the shell environment, we can build and install the binary.
+#+BEGIN_SRC bash
+nix-build -v
+# Test it
+nix-env -i ./result
 #+END_SRC
 * License
 [[http://www.wtfpl.net/about/][WTFPL]]
