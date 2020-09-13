@@ -1,5 +1,4 @@
 ase
-snakemake
 matplotlib
 scipy
 pandas
