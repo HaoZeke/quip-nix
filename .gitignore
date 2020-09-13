@@ -211,3 +211,4 @@ out/
 *.traj
 *.xml*
 _build/
+/result
