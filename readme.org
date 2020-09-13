@@ -53,5 +53,38 @@ QUIP
 
 - Note the additions to the ~src~ folder
 - Also, the TurboSOAP sources are ABSOLUTE PATHS for some reason
+** Nix Shell
+With the derivation in place, we can build and enter the environment.
+#+BEGIN_SRC bash
+nix-shell -v --run "zsh"
+#+END_SRC
+Use the following command to find out what to put in  ~MATH_LINKOPTS=~.
+#+BEGIN_SRC bash
+pkg-config --libs blas
+pkg-config --libs lapack
+#+END_SRC
+With the current ~openblas~ setup, these will both be the same.
+** QUIP-GAP
+Now we can finally set this up.
+#+BEGIN_SRC bash
+nix-shell --run "zsh"
+mkdir -p out/{bin,structs}
+cd QUIP
+mkdir -p build/$QUIP_ARCH
+cp ../files/$QUIP_ARCH-Makefile.inc build/$QUIP_ARCH/Makefile.inc
+make
+make install
+make install-quippy
+make libquip
+#+END_SRC
+** Nix Build
+To get the integrated build just run:
+#+BEGIN_SRC bash
+nix-shell --run "zsh"
+#+END_SRC
+For permission errors use another terminal to run:
+#+BEGIN_SRC bash
+watch sudo chmod 777 /nix/store/2cg51vw7iws7ayawzwwr7rfv2ix5yws3-python3-3.8.5-env/lib/python3.8/site-packages -R
+#+END_SRC
 * License
 [[http://www.wtfpl.net/about/][WTFPL]]

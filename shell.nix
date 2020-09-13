@@ -3,6 +3,7 @@
 let
   sources = import ./nix/sources.nix;
   pkgs = import sources.nixpkgs { };
+  quip = pkgs.callPackage ./pkgs/quip.nix { pythonEnv = customPython; };
   inherit (pkgs.lib) optional optionals;
   # Import
   buildpkgs = import ./nix { };
@@ -24,35 +25,36 @@ let
     doCheck = false;
     doInstallCheck = false;
   });
-  quip = pkgs.stdenv.mkDerivation {
-    name = "quip";
-    src = pkgs.lib.cleanSource ./QUIP;
-    buildInputs = with pkgs; [ gfortran openblas gcc9 ];
+  # quip = pkgs.stdenv.mkDerivation {
+  #   name = "quip";
+  #   src = pkgs.lib.cleanSource ./QUIP;
+  #   buildInputs = with pkgs; [ gfortran openblas gcc9 ];
 
-    preConfigure = ''
-      export QUIP_ARCH=linux_x86_64_gfortran
-      export QUIP_INSTALLDIR=$out/bin
-      export QUIP_STRUCTS_DIR=$PWD/structs
-      mkdir -p build/$QUIP_ARCH
-      mkdir -p $QUIP_INSTALLDIR
-      cp Makefile.inc build/$QUIP_ARCH
-    '';
+  #   preConfigure = ''
+  #     export QUIP_ARCH=linux_x86_64_gfortran
+  #     export QUIP_INSTALLDIR=$out/bin
+  #     export QUIP_STRUCTS_DIR=$PWD/structs
+  #     mkdir -p build/$QUIP_ARCH
+  #     mkdir -p $QUIP_INSTALLDIR
+  #     cp Makefile.inc build/$QUIP_ARCH
+  #   '';
 
-    buildPhase = ''
-      make
-    '';
-    installPhase = ''
-      make install
-    '';
-    meta = with pkgs.stdenv.lib; {
-      description = "";
-      longDescription = "";
-      homepage = "";
-      license = licenses.gpl3Plus;
-      platforms = [ "x86_64-linux" ];
-      maintainers = [ maintainers.HaoZeke ];
-    };
-  };
+  #   buildPhase = ''
+  #     make
+  #     make install-quippy
+  #   '';
+  #   installPhase = ''
+  #     make install
+  #   '';
+  #   meta = with pkgs.stdenv.lib; {
+  #     description = "";
+  #     longDescription = "";
+  #     homepage = "";
+  #     license = licenses.gpl3Plus;
+  #     platforms = [ "x86_64-linux" ];
+  #     maintainers = [ maintainers.HaoZeke ];
+  #   };
+  # };
   f90wrap = mach-nix.buildPythonPackage {
     pname = "f90wrap";
     version = "0.2.3";
@@ -81,10 +83,16 @@ let
     doCheck = false;
     doIstallCheck = false;
   };
+
+  # quippy = pkgs.python38.toPythonModule (pkgs.callPackage ./pkgs/quip {
+  #   enablePython = true;
+  #   pythonPackages = pkgs.python3Packages;
+  # });
+
   # quippy = mach-nix.buildPythonPackage {
   #   name = "quippy";
   #   src = ./QUIP;
-  #   # _.buildInputs = with pkgs; [ quip gfortran openblas gcc9 ];
+  #   buildInputs = with pkgs; [ quip gfortran openblas gcc9 mach-nix ];
 
   #   preConfigure = ''
   #     export QUIP_ARCH=linux_x86_64_gfortran
@@ -97,6 +105,13 @@ let
 
   #   buildPhase = ''
   #     make install-quippy
+  #   '';
+
+  #   requirements = ''
+  #     numpy
+  #     setuptools
+  #     setuptools-git
+  #     wheel
   #   '';
   # };
   mach-nix = import (builtins.fetchGit {
@@ -130,6 +145,7 @@ in pkgs.mkShell {
     direnv
     ag
     fd
+    quip
 
     # Building thigns
     gcc9
