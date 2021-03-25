@@ -2,7 +2,7 @@
 Some derivations to use QUIP on my cluster. Note that because of the psuedo-proprietary nature of GAP and some other aspects of this workflow, the sources cannot be provided here.
 
 ** Sources
-- GAP (Gaussian Approximation Potentials) from [[http://www.libatoms.org/gap/gap_download.html][here]]
+- GAP (Gaussian Approximation Potentials) from [[http://www.libatoms.org/gap/gap_download.html][here]] or now; [[https://github.com/libAtoms/GAP][from Git]]
     - My own setup used a branch which included support for the TurboSOAP descriptor
 - TurboSOAP sources
   - Some explanation of this might be [[https://turbogap.fi/wiki/index.php/Quick_start][found here]]
@@ -64,6 +64,11 @@ pkg-config --libs blas
 pkg-config --libs lapack
 #+END_SRC
 With the current ~openblas~ setup, these will both be the same.
+** Patches
+We need to apply the ~patches~ in ~files~:
+#+begin_src bash
+patch -ruN -d QUIP/quippy < files/quippyF90wrap.patch
+#+end_src
 ** QUIP-GAP
 Now we can finally set this up.
 #+BEGIN_SRC bash
