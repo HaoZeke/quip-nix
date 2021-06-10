@@ -25,36 +25,31 @@ let
     doCheck = false;
     doInstallCheck = false;
   });
-  # quip = pkgs.stdenv.mkDerivation {
-  #   name = "quip";
-  #   src = pkgs.lib.cleanSource ./QUIP;
-  #   buildInputs = with pkgs; [ gfortran openblas gcc9 ];
-
-  #   preConfigure = ''
-  #     export QUIP_ARCH=linux_x86_64_gfortran
-  #     export QUIP_INSTALLDIR=$out/bin
-  #     export QUIP_STRUCTS_DIR=$PWD/structs
-  #     mkdir -p build/$QUIP_ARCH
-  #     mkdir -p $QUIP_INSTALLDIR
-  #     cp Makefile.inc build/$QUIP_ARCH
-  #   '';
-
-  #   buildPhase = ''
-  #     make
-  #     make install-quippy
-  #   '';
-  #   installPhase = ''
-  #     make install
-  #   '';
-  #   meta = with pkgs.stdenv.lib; {
-  #     description = "";
-  #     longDescription = "";
-  #     homepage = "";
-  #     license = licenses.gpl3Plus;
-  #     platforms = [ "x86_64-linux" ];
-  #     maintainers = [ maintainers.HaoZeke ];
-  #   };
-  # };
+  # Python
+  mach-nix = import (builtins.fetchGit {
+    url = "https://github.com/DavHau/mach-nix.git";
+    ref = "refs/tags/3.3.0";
+  }) {
+    pkgs = pkgs;
+    python = "python38";
+    pypiDataRev = "5e4d6f6d16ca2b3569653bcf2643979de59c0620";
+    pypiDataSha256 =
+      "0prcm5wyglmw1rr0g5xd3y6fwqp4vnin2xfwbliyjl26k35rgp6m";
+  };
+  customPython = (mach-nix.mkPython {
+    requirements = builtins.readFile ./requirements.txt;
+    extra_pkgs = [ f90wrap ];
+    providers = { pytest = "nixpkgs"; };
+    overrides_pre = [
+      (pythonSelf: pythonSuper: {
+        pytest = pythonSuper.pytest.overrideAttrs (oldAttrs: {
+          doCheck = false;
+          doInstallCheck = false;
+        });
+        disable_checks = true;
+      })
+    ];
+  }).override (oa: { ignoreCollisions = true; });
   f90wrap = mach-nix.buildPythonPackage {
     pname = "f90wrap";
     version = "0.2.3";
@@ -71,7 +66,7 @@ let
       setuptools-git
       wheel
     '';
-    propagatedBuildInputs = with mach-nix.python; [
+    propagatedBuildInputs = with customPython.python.pkgs; [
       setuptools
       setuptools-git
       wheel
@@ -114,28 +109,6 @@ let
   #     wheel
   #   '';
   # };
-  mach-nix = import (builtins.fetchGit {
-    url = "https://github.com/DavHau/mach-nix/";
-    ref = "refs/tags/2.3.0";
-  });
-  customPython = (mach-nix.mkPython {
-    pypi_deps_db_commit = "ed2da0e9bd68cf7050c44f874c54f924675a61b5";
-    pypi_deps_db_sha256 =
-      "04fn0bsdmwgagj75libnb6ppjjkw4mb1zgvsw7ixg0d83l6vq9r5";
-    requirements = builtins.readFile ./requirements.txt;
-    extra_pkgs = [ f90wrap ];
-    providers = { pytest = "nixpkgs"; };
-    overrides_pre = [
-      (pythonSelf: pythonSuper: {
-        pytest = pythonSuper.pytest.overrideAttrs (oldAttrs: {
-          doCheck = false;
-          doInstallCheck = false;
-        });
-        pkgs = pkgs;
-        disable_checks = true;
-      })
-    ];
-  }).override (oa: { ignoreCollisions = true; });
 in pkgs.mkShell {
   buildInputs = with pkgs; [
     # Required for the shell
