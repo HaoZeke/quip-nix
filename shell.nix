@@ -32,24 +32,7 @@ let
   }) {
     pkgs = pkgs;
     python = "python38";
-    pypiDataRev = "5e4d6f6d16ca2b3569653bcf2643979de59c0620";
-    pypiDataSha256 =
-      "0prcm5wyglmw1rr0g5xd3y6fwqp4vnin2xfwbliyjl26k35rgp6m";
   };
-  customPython = (mach-nix.mkPython {
-    requirements = builtins.readFile ./requirements.txt;
-    extra_pkgs = [ f90wrap ];
-    providers = { pytest = "nixpkgs"; };
-    overrides_pre = [
-      (pythonSelf: pythonSuper: {
-        pytest = pythonSuper.pytest.overrideAttrs (oldAttrs: {
-          doCheck = false;
-          doInstallCheck = false;
-        });
-        disable_checks = true;
-      })
-    ];
-  }).override (oa: { ignoreCollisions = true; });
   f90wrap = mach-nix.buildPythonPackage {
     pname = "f90wrap";
     version = "0.2.3";
@@ -78,6 +61,20 @@ let
     doCheck = false;
     doIstallCheck = false;
   };
+  customPython = (mach-nix.mkPython {
+    requirements = builtins.readFile ./requirements.txt;
+    extra_pkgs = [ f90wrap ];
+    providers = { pytest = "nixpkgs"; };
+    overrides_pre = [
+      (pythonSelf: pythonSuper: {
+        pytest = pythonSuper.pytest.overrideAttrs (oldAttrs: {
+          doCheck = false;
+          doInstallCheck = false;
+        });
+        disable_checks = true;
+      })
+    ];
+  }).override (oa: { ignoreCollisions = true; });
 
   # quippy = pkgs.python38.toPythonModule (pkgs.callPackage ./pkgs/quip {
   #   enablePython = true;
@@ -118,13 +115,12 @@ in pkgs.mkShell {
     direnv
     ag
     fd
-    quip
+    # quip
 
     # Building thigns
     gcc9
     gfortran
     openblas
-
     customPython
     # https://github.com/sveitser/i-am-emotion/blob/294971493a8822940a153ba1bf211bad3ae396e6/gpt2/shell.nix
   ];
