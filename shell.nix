@@ -116,7 +116,7 @@ let
   # };
   mach-nix = import (builtins.fetchGit {
     url = "https://github.com/DavHau/mach-nix/";
-    ref = "2.3.0";
+    ref = "refs/tags/2.3.0";
   });
   customPython = (mach-nix.mkPython {
     pypi_deps_db_commit = "ed2da0e9bd68cf7050c44f874c54f924675a61b5";
