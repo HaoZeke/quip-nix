@@ -75,6 +75,8 @@ let
      unset SOURCE_DATE_EPOCH
     # Nixy stuff
      export PYTHONROOT=${customPython}
+     export MKLROOT=${pkgs.mkl}
+     export LD_PRELOAD="${pkgs.mkl}/lib/libmkl_core.so:${pkgs.mkl}/lib/libmkl_sequential.so"
     # quippy Stuff
      export QUIPPY_INSTALL_OPTS="--prefix $PIP_PREFIX"
   '';
@@ -122,7 +124,7 @@ in pkgs.mkShell {
     # Building thigns
     gcc9
     gfortran
-    openblas
+    mkl
     customPython
     # https://github.com/sveitser/i-am-emotion/blob/294971493a8822940a153ba1bf211bad3ae396e6/gpt2/shell.nix
   ];
