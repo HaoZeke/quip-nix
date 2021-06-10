@@ -74,7 +74,6 @@ let
      export PATH="$PIP_PREFIX/bin:$PATH"
      unset SOURCE_DATE_EPOCH
     # Nixy stuff
-     export BLASROOT=${pkgs.openblas}
      export PYTHONROOT=${customPython}
     # quippy Stuff
      export QUIPPY_INSTALL_OPTS="--prefix $PIP_PREFIX"
