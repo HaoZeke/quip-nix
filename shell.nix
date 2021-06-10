@@ -63,9 +63,9 @@ let
   };
   customPython = (mach-nix.mkPython {
     requirements = builtins.readFile ./requirements.txt;
-    extra_pkgs = [ f90wrap ];
+    packagesExtra = [ f90wrap ];
     providers = { pytest = "nixpkgs"; };
-    overrides_pre = [
+    overridesPre = [
       (pythonSelf: pythonSuper: {
         pytest = pythonSuper.pytest.overrideAttrs (oldAttrs: {
           doCheck = false;
