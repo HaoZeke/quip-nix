@@ -7,21 +7,6 @@ let
   inherit (pkgs.lib) optional optionals;
   # Import
   buildpkgs = import ./nix { };
-  # Shell Hook
-  # https://churchman.nl/2019/01/22/using-nix-to-create-python-virtual-environments/
-  # https://discourse.nixos.org/t/how-to-create-a-nix-shell-environment-with-different-python-version-as-default/3236/3
-  hook = ''
-    # QUIP Stuff
-     export QUIP_ARCH=linux_x86_64_gfortran
-     export PATH=$PATH:$QUIP_INSTALLDIR
-    # Python Stuff
-     export PIP_PREFIX="$(pwd)/_build/pip_packages"
-     export PYTHONPATH="$PIP_PREFIX/${pkgs.python3.sitePackages}:$PYTHONPATH"
-     export PATH="$PIP_PREFIX/bin:$PATH"
-     unset SOURCE_DATE_EPOCH
-    # quippy Stuff
-     export QUIPPY_INSTALL_OPTS="--prefix $PIP_PREFIX"
-  '';
   libuv = libuv.overrideAttrs (oldAttrs: {
     doCheck = false;
     doInstallCheck = false;
@@ -76,7 +61,24 @@ let
       })
     ];
   }).override (oa: { ignoreCollisions = true; });
-
+  # Shell Hook
+  # https://churchman.nl/2019/01/22/using-nix-to-create-python-virtual-environments/
+  # https://discourse.nixos.org/t/how-to-create-a-nix-shell-environment-with-different-python-version-as-default/3236/3
+  hook = ''
+    # QUIP Stuff
+     export QUIP_ARCH=linux_x86_64_gfortran
+     export PATH=$PATH:$QUIP_INSTALLDIR
+    # Python Stuff
+     export PIP_PREFIX="$(pwd)/_build/pip_packages"
+     export PYTHONPATH="$PIP_PREFIX/${customPython.python.sitePackages}:$PYTHONPATH"
+     export PATH="$PIP_PREFIX/bin:$PATH"
+     unset SOURCE_DATE_EPOCH
+    # Nixy stuff
+     export BLASROOT=${pkgs.openblas}
+     export PYTHONROOT=${customPython}
+    # quippy Stuff
+     export QUIPPY_INSTALL_OPTS="--prefix $PIP_PREFIX"
+  '';
   # quippy = pkgs.python38.toPythonModule (pkgs.callPackage ./pkgs/quip {
   #   enablePython = true;
   #   pythonPackages = pkgs.python3Packages;
