@@ -16,7 +16,8 @@ let
      export PATH=$PATH:$QUIP_INSTALLDIR
     # Python Stuff
      export PIP_PREFIX="$(pwd)/_build/pip_packages"
-     export PYTHONPATH="$(pwd)/_build/pip_packages/lib/python3.8/site-packages"
+     export PYTHONPATH="$PIP_PREFIX/${pkgs.python3.sitePackages}:$PYTHONPATH"
+     export PATH="$PIP_PREFIX/bin:$PATH"
      unset SOURCE_DATE_EPOCH
     # quippy Stuff
      export QUIPPY_INSTALL_OPTS="--prefix $PIP_PREFIX"
