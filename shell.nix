@@ -3,6 +3,7 @@
 let
   sources = import ./nix/sources.nix;
   pkgs = import sources.nixpkgs { };
+  stdenv = pkgs.stdenv;
   quip = pkgs.callPackage ./pkgs/quip.nix { pythonEnv = customPython; };
   inherit (pkgs.lib) optional optionals;
   # Import
