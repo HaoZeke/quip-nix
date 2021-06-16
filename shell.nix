@@ -22,12 +22,12 @@ let
   };
   f90wrap = mach-nix.buildPythonPackage {
     pname = "f90wrap";
-    version = "0.2.3";
+    version = "0.2.6";
     src = pkgs.fetchFromGitHub {
       owner = "jameskermode";
       repo = "f90wrap";
-      rev = "1cd8362553e95f88ecdf898bf92b4d9caead1734";
-      sha256 = "sha256-U8nhHq0eTyf1+j+inYiZiNAS0VwDqCxsPhOQ4s0m9U0=";
+      rev = "${builtins.getEnv "version"}";
+      sha256 = "sha256-1W1aFU9Q4lh1gnFTAVCJGyK1PpdJKnFjzUuL93n5BlQ=";
     };
     buildInputs = with pkgs; [ gfortran stdenv ];
     requirements = ''
