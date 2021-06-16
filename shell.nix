@@ -129,6 +129,9 @@ in pkgs.mkShell {
     # https://github.com/sveitser/i-am-emotion/blob/294971493a8822940a153ba1bf211bad3ae396e6/gpt2/shell.nix
   ];
   shellHook = hook;
+  GIT_SSL_CAINFO = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+  LOCALE_ARCHIVE = stdenv.lib.optionalString stdenv.isLinux
+    "${pkgs.glibcLocales}/lib/locale/locale-archive";
 }
 
 # extra_pkgs = [
