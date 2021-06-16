@@ -26,7 +26,7 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "jameskermode";
       repo = "f90wrap";
-      rev = builtins.getEnv "version";
+      rev = "v0.2.6";
       sha256 = "sha256-1W1aFU9Q4lh1gnFTAVCJGyK1PpdJKnFjzUuL93n5BlQ=";
     };
     buildInputs = with pkgs; [ gfortran stdenv ];
