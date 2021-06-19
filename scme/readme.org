@@ -1,0 +1,35 @@
+* SCME and QUIP
+For SCME the steps from ~quip-nix~ on Elja are simple enough.
+#+begin_src bash
+gh repo clone haozeke/quip-nix
+cd quip-nix
+export QNIX="$(pwd)"
+gh repo clone libatoms/QUIP
+cp -r scme/ThirdParty QUIP/src
+cp -fr scme/Potentials QUIP/src
+cd  QUIP/src/ThirdParty
+gh repo clone scmedev/scme
+cd scme
+git submodule update --init --recursive
+make
+cd $QNIX/QUIP
+git submodule update --init --recursive
+cp ../files/xyzStuff.patch .
+git apply xyzStuff.patch
+cp ../files/quippyNix.patch .
+git apply quippyNix.patch .
+cd $QNIX
+nix-shell
+cd QUIP
+make config
+# NOTE: Check the mathlibrary options
+# -L${MKLROOT}/lib/ -lmkl_core -lmkl_gf_lp64 -lmkl_sequential
+# NOTE: Also ensure that Would you like to compile with SCME support ? is y
+# Add the following to the Makefile.inc
+echo "INCLUDES += -I${MKLROOT}/include" >> build/$QUIP_ARCH/Makefile.inc
+make -j$(nproc)
+make quippy
+make install-quippy
+cd ../scme/tests
+python get_forces.py # Profit!
+#+end_src
