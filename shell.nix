@@ -122,8 +122,8 @@ in pkgs.mkShell {
     direnv
     ag
     fd
+    cmake
     # quip
-
     # Building thigns
     gcc9
     gfortran
