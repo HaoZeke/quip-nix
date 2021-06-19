@@ -114,6 +114,10 @@ let
   #   '';
   # };
 in pkgs.mkShell {
+    nativeBuildInputs = with pkgs; [
+    buildPackages.gfortran
+    buildPackages.stdenv.cc
+  ];
   buildInputs = with pkgs; [
     # Required for the shell
     zsh
@@ -124,9 +128,7 @@ in pkgs.mkShell {
     fd
     cmake
     # quip
-    # Building thigns
-    gcc9
-    gfortran
+    # Building things
     mkl
     customPython
     # https://github.com/sveitser/i-am-emotion/blob/294971493a8822940a153ba1bf211bad3ae396e6/gpt2/shell.nix
