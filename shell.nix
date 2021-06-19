@@ -69,6 +69,7 @@ let
     # QUIP Stuff
      export QUIP_ARCH=linux_x86_64_gfortran
      export PATH=$PATH:$QUIP_INSTALLDIR
+     export QUIP_ROOT="$(pwd)/QUIP"
     # Python Stuff
      export PIP_PREFIX="$(pwd)/_build/pip_packages"
      export PYTHONPATH="$PIP_PREFIX/${customPython.python.sitePackages}:$PYTHONPATH"
