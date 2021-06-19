@@ -1,0 +1,30 @@
+diff --git a/quippy/Makefile b/quippy/Makefile
+index ada9815e6..2955663db 100644
+--- a/quippy/Makefile
++++ b/quippy/Makefile
+@@ -71,13 +71,13 @@ F2PY_LINK_ARGS = $(shell ${PYTHON} -c 'import sys; print(" ".join([arg for arg i
+ 
+ 
+ #################################
+-.PHONY: all build install clean f90wrap
++.PHONY: all build install clean # f90wrap
+ 
+ 
+ all: build
+ 
+-f90wrap:
+-	${PIP} install "f90wrap>=0.2.6"
++# f90wrap:
++# 	${PIP} install "f90wrap>=0.2.6"
+ 
+ clean:
+ 	rm -f _quippy${EXT_SUFFIX} ${F90WRAP_FILES} ${WRAP_FPP_FILES}
+@@ -109,7 +109,7 @@ _quippy${EXT_SUFFIX} ${F90WRAP_OBJS}: ${F90WRAP_FILES}
+ 	F90=${F90} LDFLAGS="${QUIPPY_LDFLAGS}" f2py-f90wrap --build-dir . -c -m _quippy ${F90WRAP_FILES} \
+ 		-L. -lquip_nostub ${F2PY_LINK_ARGS} --f90flags="${QUIPPY_F90FLAGS}"
+ 
+-build: f90wrap _quippy${EXT_SUFFIX} ${QUIPPY_SRC_DIR}/quippy/*.py
++build: _quippy${EXT_SUFFIX} ${QUIPPY_SRC_DIR}/quippy/*.py
+ 	${QUIP_ROOT}/bin/gitversion --hash-only > VERSION
+ 	cp -r ${QUIPPY_SRC_DIR}/quippy/*.py quippy
+ 
