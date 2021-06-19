@@ -27,7 +27,7 @@ e = hexa.get_potential_energy()
 f = hexa.get_forces()
 
 s = hexa.get_chemical_symbols()
-for i in range(len(s)/3):
+for i in range(int(len(s)/3)):
 	print("H2O Nr.: ", i+1)
 	print(s[3*i +0],f[3*i+0,:])
 	print(s[3*i +1],f[3*i+1,:])
