@@ -99,5 +99,43 @@ nix-build -v
 # Test it
 nix-env -i ./result
 #+END_SRC
+** Conda Build
+*** Obtain Sources
+We will start by getting QUIP and TurboGAP.
+#+begin_src bash
+git clone --recursive https://github.com/libAtoms/QUIP.git QUIP
+cd QUIP/src
+git clone --recursive https://github.com/mcaroba/turbogap.git
+mkdir ThirdParty
+# In QUIP/src
+cp -r ../../scme ThirdParty/
+#+end_src
+Now we have both of these ready to be made.
+*** Environment Initialization
+For this we use either ~conda~ or ~micromamba~.
+#+begin_src bash
+conda env create -f environment.yml
+conda activate quip-conda
+# or
+micromamba create -f environment.yml
+micromamba activate quip-conda
+#+end_src
+Also we need to initialize some variables.
+#+begin_src bash
+source ./setEnvVars.sh
+#+end_src
+These essentially determine the different exported paths.
+*** Building
+Finally we need to build all the things.
+#+begin_src bash
+cd QUIP
+mkdir -p build/$QUIP_ARCH
+mkdir -p "$QUIP_STRUCTS_DIR"
+cp ../files/$QUIP_ARCH-Makefile.inc build/$QUIP_ARCH/Makefile.inc
+make
+make install
+make install-quippy
+make libquip
+#+end_src
 * License
 [[http://www.wtfpl.net/about/][WTFPL]]
