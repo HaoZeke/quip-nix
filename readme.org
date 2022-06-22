@@ -114,6 +114,7 @@ Now we have both of these ready to be made.
 *** Environment Initialization
 For this we use either ~conda~ or ~micromamba~.
 #+begin_src bash
+# from the root directory
 conda env create -f environment.yml
 conda activate quip-conda
 # or
@@ -133,9 +134,11 @@ mkdir -p build/$QUIP_ARCH
 mkdir -p "$QUIP_STRUCTS_DIR"
 cp ../files/$QUIP_ARCH-Makefile.inc build/$QUIP_ARCH/Makefile.inc
 make
-make install
-make install-quippy
+make yes-python
 make libquip
+make install-quippy
+make install-python
+make install
 #+end_src
 * License
 [[http://www.wtfpl.net/about/][WTFPL]]

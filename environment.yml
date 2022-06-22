@@ -12,7 +12,7 @@ dependencies:
   - cmake
   - gfortran
   - pkg-config
-  - openblas
+  - mkl
   # Python
   - numpy
   - scipy
