@@ -7,12 +7,10 @@ name: quip-conda
 channels:
   - conda-forge
 dependencies:
-  - compilers
   - meson
   - cmake
   - gfortran
   - pkg-config
-  - openblas
   # Python
   - numpy
   - scipy

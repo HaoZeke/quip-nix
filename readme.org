@@ -127,6 +127,18 @@ source ./setEnvVars.sh
 #+end_src
 These essentially determine the different exported paths.
 *** Building
+We will assume any further explanation that:
+- Compilers are present
+- OpenBlas is present
+
+On an HPC, this can be something like:
+#+begin_src bash
+ml avail openblas
+ml avail gcc
+ml load GCC/11.2.0
+ml load OpenBLAS/0.3.18-GCC-11.2.0
+#+end_src
+
 Finally we need to build all the things.
 #+begin_src bash
 cd QUIP
@@ -134,11 +146,9 @@ mkdir -p build/$QUIP_ARCH
 mkdir -p "$QUIP_STRUCTS_DIR"
 cp ../files/$QUIP_ARCH-Makefile.inc build/$QUIP_ARCH/Makefile.inc
 make
-make yes-python
 make libquip
-make install-quippy
-make install-python
 make install
+make install-quippy
 #+end_src
 * License
 [[http://www.wtfpl.net/about/][WTFPL]]
