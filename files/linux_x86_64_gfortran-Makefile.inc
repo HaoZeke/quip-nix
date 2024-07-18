@@ -15,7 +15,8 @@
 # DEBUG=-O0 -g -DDUMP_CORE_ON_ABORT -DDEBUG -fbounds-check
 # DEBUG=
 # CDEBUG=
-MATH_LINKOPTS= -L$CONDA_PREFIX/lib -lopenblas
+# Set in setEnvVars.sh
+# MATH_LINKOPTS=
 EXTRA_LINKOPTS=
 USE_MAKEDEP=1
 MAKEDEP=makedep.py
